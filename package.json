@@ -1,0 +1,16 @@
+{
+  "name": "libraapp",
+  "version": "1.0.0",
+  "description": "libraserver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "renatskiy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "meteor-random": "0.0.3",
+    "mongodb": "^3.0.4"
+  }
+}
