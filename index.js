@@ -3,7 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 // const MongoClient = require('mongodb').MongoClient;
 // var db;
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 
 app.use(bodyParser.json());
@@ -31,9 +35,10 @@ app.get('/books/:id', (req, res) => {
     res.send(book4View.book);
 });
 
-app.post('/books', (req, res)=> {
+app.post('/book', (req, res)=> {
+    let book = req.body;
     let newBook = {
-        book: req.body.item,
+        ...book,
         id: Date.now(),
     };
     BoOks.push(newBook);
