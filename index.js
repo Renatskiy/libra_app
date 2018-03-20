@@ -38,7 +38,7 @@ app.get('/books/:id', (req, res) => {
 app.post('/book', (req, res)=> {
     let book = req.body;
     let newBook = {
-        ...book,
+            ...book,
         id: Date.now(),
     };
     BoOks.push(newBook);
