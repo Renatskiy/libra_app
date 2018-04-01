@@ -9,12 +9,55 @@ app.use(function(req, res, next) {
     next();
 });
 
+const collection = require('./collections.js')
 
 app.use(bodyParser.json());
 
 
 app.get('/', (req, res)=> res.send('sdf'));
 
+
+////////////////// добавление в монго
+app.post('/book', async(req, res)=> {
+    let book = req.body;
+    let newBook = {
+        ...book,
+        bookId: Date.now(),
+    };
+    collection.myCollection.insert(newBook);
+// books.push(newBook);
+    res.send(books);
+});
+
+
+// добавление пользователя
+app.post('/user', async(req, res)=>{
+    let user = req.body;
+    collection.users.insert(user);
+})
+
+
+/////////////////// обращение к монго
+
+app.get('/mongo', async(req, res)=> {
+    const from_mongo = await collections.myCollection.find({});
+    res.send(from_mongo);
+
+});
+app.get('/mongo_users', async(req, res)=> {
+    const from_mongo = await collections.users.find({});
+    res.send(from_mongo);
+
+});
+/////////////////
+
+
+
+let Users = [
+    {login: 'Ivan', password: '234', useBooksId: [1, 2], name: 'Иван', lastName: 'Иванов'},
+    {login: 'Fyodor', password: '123', useBooksId: [2, 3], name: 'Федор', lastName: 'lastName'},
+    {login: 'Ipolit', password: '123', useBooksId: [2, 3], name: 'Иполит', lastName: 'lastName'}
+];
 
 
 let books = [
@@ -49,6 +92,8 @@ let books = [
     },
 ];
 
+
+
 app.get('/books', (req, res)=> res.send(books));
 
 app.get('/books/:id', (req, res) => {
@@ -58,15 +103,6 @@ app.get('/books/:id', (req, res) => {
     res.send(book4View.book);
 });
 
-app.post('/book', (req, res)=> {
-    let book = req.body;
-    let newBook = {
-            ...book,
-        bookId: Date.now(),
-    };
-books.push(newBook);
-    res.send(books);
-});
 
 app.patch('/books/:id',(req, res)=>{
     var item = books.find(function (books) {
@@ -80,7 +116,7 @@ app.put('/books/:id', (req, res)=> {
     var item = books.find(function (books) {
         return books.id === Number(req.params.id)
     })
-    console.log(item);
+    // console.log(item);
     item.book = req.body.book;
     res.sendStatus(200);
 });
