@@ -96,6 +96,8 @@ let books = [
 
 app.get('/books', (req, res)=> res.send(books));
 
+app.get('/users', (req, res)=> res.send(Users));
+
 app.get('/books/:id', (req, res) => {
     var book4View = books.find(function (books) {
         return books.bookId === Number(req.params.id)
@@ -125,7 +127,7 @@ app.delete('/books/:id', (req, res)=> {
     books = books.filter(function (book) {
          return book.id !== Number(req.params.id)
 
-        })
+        });
     res.sendStatus(200);
 });
 
